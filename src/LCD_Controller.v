@@ -7,8 +7,8 @@ module LCD_Controller (
     input   wire            i_clk,
     input   wire            i_clk_fast,
     input   wire            i_res_n,
-	input   wire			i_btn_a,
-    input   wire			i_btn_b,
+    input   wire            i_btn_a,
+    input   wire            i_btn_b,
     output  wire            o_clk,
     output  reg             o_hsync,
     output  reg             o_vsync,
@@ -79,15 +79,15 @@ module LCD_Controller (
     /**************************************************************
      *  Party Parrot Generator
      *************************************************************/
-    reg 	[12:0] 	r_rom_addr;     // ランレングス圧縮された画像データROMの読み出しアドレス
-    wire	[ 7:0] 	w_rom_rdata;    // 画像データROM読み出しデータ [7:6]:色情報、[5:0]:X方向の同色連続数
-    wire			w_img_en;       // Party Parrot描画有効領域
-    reg		[ 5:0]  r_pixel_cnt;	// 連続するpixel数を数えるカウンタ
-    wire	[15:0]	w_lcd_data;     // LCDに転送するRGB=565データ
-    reg		[ 3:0]	r_imgNum;		// 画像番号
-    wire	[12:0]	w_rom_init_addr;// 画像先頭アドレス
-    wire	[15:0]	w_party_color;	// 胴体の色（画像番号によって切り替える）
-    wire	[15:0]	w_back_color;	// 背景色
+    reg     [12:0]   r_rom_addr;    // ランレングス圧縮された画像データROMの読み出しアドレス
+    wire    [ 7:0]   w_rom_rdata;   // 画像データROM読み出しデータ [7:6]:色情報、[5:0]:X方向の同色連続数
+    wire            w_img_en;       // Party Parrot描画有効領域
+    reg     [ 5:0]  r_pixel_cnt;    // 連続するpixel数を数えるカウンタ
+    wire    [15:0]  w_lcd_data;     // LCDに転送するRGB=565データ
+    reg     [ 3:0]  r_imgNum;       // 画像番号
+    wire    [12:0]  w_rom_init_addr;// 画像先頭アドレス
+    wire    [15:0]  w_party_color;  // 胴体の色（画像番号によって切り替える）
+    wire    [15:0]  w_back_color;   // 背景色
 
     /**************************************************************
      *  ボタン信号同期化FF
@@ -120,37 +120,37 @@ module LCD_Controller (
     /**************************************************************
      *  画像番号と画像ROMの先頭アドレスを変換する
      *************************************************************/
-    assign w_rom_init_addr = (r_imgNum == 4'd0) ? 13'd0 :		// r01.bmp
-                             (r_imgNum == 4'd1) ? 13'd630 :		// r02.bmp
-                             (r_imgNum == 4'd2) ? 13'd1266 :	// r03.bmp
-                             (r_imgNum == 4'd3) ? 13'd1899 :	// r04.bmp
-                             (r_imgNum == 4'd4) ? 13'd2533 :	// r05.bmp
-                             (r_imgNum == 4'd5) ? 13'd3178 :	// r06.bmp
-                             (r_imgNum == 4'd6) ? 13'd3789 :	// r07.bmp
-                             (r_imgNum == 4'd7) ? 13'd4376 :	// r08.bmp
-                             (r_imgNum == 4'd8) ? 13'd4960 :	// r09.bmp
-                             13'd5566;							// r10.bmp
+    assign w_rom_init_addr = (r_imgNum == 4'd0) ? 13'd0 :       // r01.bmp
+                             (r_imgNum == 4'd1) ? 13'd630 :     // r02.bmp
+                             (r_imgNum == 4'd2) ? 13'd1266 :    // r03.bmp
+                             (r_imgNum == 4'd3) ? 13'd1899 :    // r04.bmp
+                             (r_imgNum == 4'd4) ? 13'd2533 :    // r05.bmp
+                             (r_imgNum == 4'd5) ? 13'd3178 :    // r06.bmp
+                             (r_imgNum == 4'd6) ? 13'd3789 :    // r07.bmp
+                             (r_imgNum == 4'd7) ? 13'd4376 :    // r08.bmp
+                             (r_imgNum == 4'd8) ? 13'd4960 :    // r09.bmp
+                             13'd5566;                          // r10.bmp
     
     /**************************************************************
      *  画像番号とParty Parrotの胴体色を対応付ける
      *************************************************************/
-    assign w_party_color   = (r_imgNum == 4'd0) ? 16'b11111_111111_11111 :	// r_1
-                             (r_imgNum == 4'd1) ? 16'b11111_111111_10010 :	// r_2
-                             (r_imgNum == 4'd2) ? 16'b10001_111111_10010 :	// r_3
-                             (r_imgNum == 4'd3) ? 16'b10001_111111_11111 :	// r_4
-                             (r_imgNum == 4'd4) ? 16'b10001_101111_11111 :	// r_5
-                             (r_imgNum == 4'd5) ? 16'b11011_100100_11111 :	// r_6
-                             (r_imgNum == 4'd6) ? 16'b11111_100011_11111 :	// r_7
-                             (r_imgNum == 4'd7) ? 16'b11111_011010_11111 :	// r_8
-                             (r_imgNum == 4'd8) ? 16'b11111_011011_11000 :	// r_9
-                                                  16'b11111_011011_01110;	// r_10
+    assign w_party_color   = (r_imgNum == 4'd0) ? 16'b11111_111111_11111 :  // r_1
+                             (r_imgNum == 4'd1) ? 16'b11111_111111_10010 :  // r_2
+                             (r_imgNum == 4'd2) ? 16'b10001_111111_10010 :  // r_3
+                             (r_imgNum == 4'd3) ? 16'b10001_111111_11111 :  // r_4
+                             (r_imgNum == 4'd4) ? 16'b10001_101111_11111 :  // r_5
+                             (r_imgNum == 4'd5) ? 16'b11011_100100_11111 :  // r_6
+                             (r_imgNum == 4'd6) ? 16'b11111_100011_11111 :  // r_7
+                             (r_imgNum == 4'd7) ? 16'b11111_011010_11111 :  // r_8
+                             (r_imgNum == 4'd8) ? 16'b11111_011011_11000 :  // r_9
+                                                  16'b11111_011011_01110;   // r_10
 
     /**************************************************************
      *  描画する画像番号を切り替える
      *  LCDの垂直同期信号の発生回数をカウント
      *  i_btn_a = Lowのときは切り替え高速化
      *************************************************************/
-    reg [7:0]   r_imgNumTim;	// 画像切り替えフレーム数カウンタ
+    reg [7:0]   r_imgNumTim;    // 画像切り替えフレーム数カウンタ
     reg [1:0]   r_v_sync_ff;    // 垂直同期信号のエッジ検出用
     reg [5:0]   r_cmov;         // 背景画像のX方向ズレ量
     always @(posedge i_clk or negedge i_res_n) begin
@@ -185,8 +185,8 @@ module LCD_Controller (
      *************************************************************/
     localparam BITMAP_WIDTH  = 16'd128; // 画像横幅
     localparam BITMAP_HEIGHT = 16'd99;  // 画像縦幅
-    localparam BITMAP_LEFT   = 9'd200;	// 初期位置
-    localparam BITMAP_TOP    = 9'd100;	// 初期位置
+    localparam BITMAP_LEFT   = 9'd200;  // 初期位置
+    localparam BITMAP_TOP    = 9'd100;  // 初期位置
     reg x_vel;
     reg y_vel;
     reg [9:0] x_pos = BITMAP_LEFT;
@@ -215,23 +215,23 @@ module LCD_Controller (
     /**************************************************************
      *  ゲーミング背景生成（虹色）
      *************************************************************/
-    wire [5:0] w_sum = o_x_cnt[5:0] + o_y_cnt[5:0] + r_cmov[5:0];	// X方向シフト量計算
-	wire [2:0] w_csel = w_sum[5:3];	// 色選択
-    assign w_back_color =   (w_csel == 3'd0) ? 16'b11111_000000_00000 :	// 赤
-                            (w_csel == 3'd1) ? 16'b11111_101001_00000 :	// オレンジ
-                            (w_csel == 3'd2) ? 16'b11111_111111_00000 :	// 黄色
-                            (w_csel == 3'd3) ? 16'b00000_100000_00000 :	// 緑
-                            (w_csel == 3'd4) ? 16'b00000_111111_11111 :	// 水色
-                            (w_csel == 3'd5) ? 16'b00000_000000_11111 :	// 青
-                                               16'b10000_000000_10000;	// 柴
+    wire [5:0] w_sum = o_x_cnt[5:0] + o_y_cnt[5:0] + r_cmov[5:0];   // X方向シフト量計算
+    wire [2:0] w_csel = w_sum[5:3]; // 色選択
+    assign w_back_color =   (w_csel == 3'd0) ? 16'b11111_000000_00000 : // 赤
+                            (w_csel == 3'd1) ? 16'b11111_101001_00000 : // オレンジ
+                            (w_csel == 3'd2) ? 16'b11111_111111_00000 : // 黄色
+                            (w_csel == 3'd3) ? 16'b00000_100000_00000 : // 緑
+                            (w_csel == 3'd4) ? 16'b00000_111111_11111 : // 水色
+                            (w_csel == 3'd5) ? 16'b00000_000000_11111 : // 青
+                                               16'b10000_000000_10000;  // 柴
 
-	/**************************************************************
+    /**************************************************************
      *  LCDデータ
      *************************************************************/
-	assign w_lcd_data = (w_rom_rdata[7:6] == 2'd0) ? w_back_color[15:0] :	// 白 => 透過（背景色）
-					(w_rom_rdata[7:6] == 2'd1) ? 16'b00000_000000_00000 :	// 黒 => 輪郭線は黒色
-					(w_rom_rdata[7:6] == 2'd2) ? w_party_color[15:0]    :	// 黄色 => 画像番号に紐付けて着色
-					16'b01000_010000_01000;									// グレー => 鼻はいつもグレー色
+    assign w_lcd_data = (w_rom_rdata[7:6] == 2'd0) ? w_back_color[15:0] :   // 白 => 透過（背景色）
+                    (w_rom_rdata[7:6] == 2'd1) ? 16'b00000_000000_00000 :   // 黒 => 輪郭線は黒色
+                    (w_rom_rdata[7:6] == 2'd2) ? w_party_color[15:0]    :   // 黄色 => 画像番号に紐付けて着色
+                    16'b01000_010000_01000;                                 // グレー => 鼻はいつもグレー色
 
     /**************************************************************
      *  ランレングス圧縮展開処理
@@ -253,7 +253,7 @@ module LCD_Controller (
             end else begin
                 o_lcd_data <= w_back_color;
                 if (~o_vsync) begin
-                    r_rom_addr <= w_rom_init_addr;	 // 画像先頭アドレスの初期化
+                    r_rom_addr <= w_rom_init_addr;  // 画像先頭アドレスの初期化
                     r_pixel_cnt <= 6'd0;
                 end
             end

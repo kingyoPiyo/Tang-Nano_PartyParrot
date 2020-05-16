@@ -39,10 +39,10 @@ module top (
      *************************************************************/
     LCD_Controller LCD_Controller_inst (
         .i_clk ( clk9m ),
-		.i_clk_fast ( clk36m ),
+        .i_clk_fast ( clk36m ),
         .i_res_n ( 1'b1 ),
-		.i_btn_a ( btn_a ),
-		.i_btn_b ( btn_b ),
+        .i_btn_a ( btn_a ),
+        .i_btn_b ( btn_b ),
         .o_clk ( lcd_clk ),
         .o_hsync ( lcd_hsync ),
         .o_vsync ( lcd_vsync ),
